@@ -1,6 +1,8 @@
 package com.elhaouari.urlshortener;
 
 
+import java.net.URL;
+
 public class ShortenerSeoKeyword implements IUrlShortener {
     private String keyword;
     private final IUrlShortenerStore store;
@@ -35,8 +37,12 @@ public class ShortenerSeoKeyword implements IUrlShortener {
         }
     }
 
-    private void validateUrl(String url){
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+    private void validateUrl(String urlString){
+        try{
+            URL url = new URL(urlString);
+            url.toURI();
+        }
+        catch(Exception e) {
             throw new IllegalArgumentException("The url provided is not valid");
         }
     }
